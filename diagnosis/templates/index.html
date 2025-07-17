@@ -1,12 +1,14 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top fade-in-up">
   <div class="container-fluid">
-    <a class="navbar-brand fw-bold" href="#" style="font-size: 1.25rem">
-      <i class="fas fa-seedling me-2"></i>AgroDetect
+    <a class="navbar-brand fw-bold" href="#" style="font-size: 1.25rem;">
+      <i class="fas fa-seedling me-2 pulse"></i>
+      <span class="text-gradient">AgroDetect</span>
     </a>
     <div class="navbar-nav ms-auto">
-      <span class="navbar-text me-3 text-white-50">
+      <span class="navbar-text me-3 text-white-50 slide-in-right">
+        <i class="fas fa-user-circle me-2"></i>
         Welcome,
         <strong class="text-white"
           >{{ user.first_name|default:user.username }}</strong
@@ -17,38 +19,41 @@
 </nav>
 
 <!-- Sidebar -->
-<div class="sidebar" id="sidebar">
+<div class="sidebar slide-in-right" id="sidebar">
   <div class="sidebar-header">
-    <h4 class="text-white"><i class="fas fa-leaf me-2"></i> Dashboard</h4>
+    <h4 class="text-white">
+      <i class="fas fa-leaf me-2 pulse"></i> 
+      <span class="text-gradient">Dashboard</span>
+    </h4>
   </div>
   <ul class="sidebar-menu">
     <li class="menu-item active">
       <a href="#" class="menu-link" onclick="showUploadSection()">
-        <i class="fas fa-upload"></i>
+        <i class="fas fa-upload nav-icon"></i>
         <span>Upload Image</span>
       </a>
     </li>
     <li class="menu-item">
       <a href="#" class="menu-link" onclick="showCommonDiseases()">
-        <i class="fas fa-bug"></i>
+        <i class="fas fa-bug nav-icon"></i>
         <span>Common Diseases</span>
       </a>
     </li>
     <li class="menu-item">
       <a href="#" class="menu-link" onclick="showRecentPictures()">
-        <i class="fas fa-images"></i>
+        <i class="fas fa-images nav-icon"></i>
         <span>Recent Pictures</span>
       </a>
     </li>
     <li class="menu-item">
       <a href="#" class="menu-link" onclick="showReportIssue()">
-        <i class="fas fa-exclamation-circle"></i>
+        <i class="fas fa-exclamation-circle nav-icon"></i>
         <span>Report Issues</span>
       </a>
     </li>
     <li class="menu-item logout">
       <a href="{% url 'logout' %}" class="menu-link">
-        <i class="fas fa-sign-out-alt"></i>
+        <i class="fas fa-sign-out-alt nav-icon"></i>
         <span>Logout</span>
       </a>
     </li>
@@ -56,32 +61,32 @@
 </div>
 
 <!-- Main Content -->
-<div class="main-content">
+<div class="main-content fade-in-up">
   <div class="container mt-10">
     <!-- Section for Upload Image Form (Default Active) -->
     <div id="upload-section" class="content-section active">
       <div class="row justify-content-center">
         <div class="col-md-8">
-          <div class="card border-0">
+          <div class="card border-0 shadow-soft rounded-modern">
             <div class="card-body p-5">
-              <h1 class="card-title text-center mb-5 fs-4">
-                <i class="fas fa-seedling text-success me-3"></i> Crop Disease
+              <h1 class="card-title text-center mb-5 fs-4 text-gradient">
+                <i class="fas fa-seedling me-3 pulse"></i> Crop Disease
                 Detection
               </h1>
               <form id="cropForm" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-4">
-                  <label for="crop_image" class="form-label fw-bold fs-6">
-                    <i class="fas fa-upload me-2"></i> Select Crop Image:
+                  <label for="crop_image" class="form-label fw-bold fs-6 text-gradient">
+                    <i class="fas fa-upload me-2"></i> Select Crop Image
                   </label>
                   <input
                     type="file"
-                    class="form-control"
+                    class="form-control shadow-soft"
                     id="crop_image"
                     name="image"
                     accept="image/*"
                     required
-                    style="font-size: 1rem"
+                    style="font-size: 1rem; border-radius: var(--radius-md);"
                   />
                 </div>
                 <div
@@ -93,17 +98,19 @@
                     id="previewImg"
                     src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y4ZjlmYSIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBQcmV2aWV3PC90ZXh0Pgo8L3N2Zz4K"
                     alt="Preview"
-                    class="img-fluid rounded-lg"
+                    class="img-fluid rounded-modern shadow-soft"
                     style="
                       max-width: 300px;
                       max-height: 300px;
-                      border: 3px solid #c8e6c9;
+                      border: 3px solid var(--accent-green);
+                      transition: all var(--transition-normal);
                     "
                   />
                 </div>
                 <div class="d-grid mt-4">
-                  <button type="submit" class="btn btn-success btn-md py-2">
-                    <i class="fas fa-microscope me-2"></i> Diagnose Crop Disease
+                  <button type="submit" class="btn btn-success btn-md py-3 shadow-soft rounded-modern">
+                    <i class="fas fa-microscope me-2"></i> 
+                    <span class="fw-bold">Diagnose Crop Disease</span>
                   </button>
                 </div>
               </form>
@@ -118,10 +125,10 @@
     <div id="prediction-results" class="content-section" style="display: none">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          <div class="card border-0">
+          <div class="card border-0 shadow-soft rounded-modern">
             <div class="card-body p-5">
-              <h2 class="card-title text-center mb-5 fs-4">
-                🌱 Crop Disease Detection Result
+              <h2 class="card-title text-center mb-5 fs-4 text-gradient">
+                <i class="fas fa-seedling me-3 pulse"></i>Crop Disease Detection Result
               </h2>
               <div id="prediction-card-content">
                 <!-- Dynamic content will be inserted here by JavaScript -->
@@ -129,19 +136,21 @@
               <div class="d-flex justify-content-center gap-3 mt-5">
                 <button
                   type="button"
-                  class="btn btn-primary btn-md py-2 px-3"
+                  class="btn btn-primary btn-md py-3 px-4 shadow-soft rounded-modern"
                   data-bs-toggle="modal"
                   data-bs-target="#recommendationsModal"
                   id="viewRecommendationsBtn"
                 >
-                  <i class="fas fa-lightbulb me-2"></i> View Recommendations
+                  <i class="fas fa-lightbulb me-2"></i> 
+                  <span class="fw-bold">View Recommendations</span>
                 </button>
                 <button
                   type="button"
-                  class="btn btn-success btn-md py-2 px-3"
+                  class="btn btn-success btn-md py-3 px-4 shadow-soft rounded-modern"
                   onclick="resetAndShowUpload()"
                 >
-                  <i class="fas fa-upload me-2"></i> Upload Another Image
+                  <i class="fas fa-upload me-2"></i> 
+                  <span class="fw-bold">Upload Another Image</span>
                 </button>
               </div>
             </div>
@@ -166,10 +175,10 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <div class="card shadow-lg border-0">
-          <div class="card-header bg-danger text-white">
+        <div class="card shadow-strong border-0 rounded-modern">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, var(--danger) 0%, #c82333 100%);">
             <h4 class="mb-0">
-              <i class="fas fa-exclamation-circle me-2"></i>
+              <i class="fas fa-exclamation-circle me-2 pulse"></i>
               Report an Issue
             </h4>
           </div>
@@ -186,11 +195,11 @@
               {% csrf_token %}
               <div class="mb-3">
                 <label for="issue-title" class="form-label">
-                  <i class="fas fa-heading me-1"></i>Issue Title
+                  <i class="fas fa-heading me-2 text-gradient"></i>Issue Title
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control shadow-soft rounded-modern"
                   id="issue-title"
                   name="title"
                   placeholder="Brief description of the issue"
@@ -200,10 +209,10 @@
 
               <div class="mb-3">
                 <label for="issue-description" class="form-label">
-                  <i class="fas fa-align-left me-1"></i>Detailed Description
+                  <i class="fas fa-align-left me-2 text-gradient"></i>Detailed Description
                 </label>
                 <textarea
-                  class="form-control"
+                  class="form-control shadow-soft rounded-modern"
                   id="issue-description"
                   name="description"
                   rows="6"
@@ -213,7 +222,7 @@
               </div>
 
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-danger btn-lg">
+                <button type="submit" class="btn btn-danger btn-lg py-3 shadow-soft rounded-modern">
                   <i class="fas fa-paper-plane me-2"></i>
                   Submit Report
                 </button>
@@ -235,14 +244,14 @@
   aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content">
-      <div class="modal-header bg-success text-white">
+    <div class="modal-content rounded-modern shadow-strong">
+      <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--success) 0%, var(--light-green) 100%);">
         <h5
           class="modal-title"
           id="recommendationsModalLabel"
           style="font-size: 1.25rem"
         >
-          🌿 Recommendations for <span id="modalDiseaseName"></span>
+          <i class="fas fa-leaf me-2 pulse"></i>Recommendations for <span id="modalDiseaseName"></span>
         </h5>
         <button
           type="button"
@@ -258,7 +267,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
+          <i class="fas fa-times me-2"></i>Close
         </button>
       </div>
     </div>
@@ -274,10 +283,10 @@
   aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content">
-      <div class="modal-header bg-success text-white">
+    <div class="modal-content rounded-modern shadow-strong">
+      <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--success) 0%, var(--light-green) 100%);">
         <h5 class="modal-title" id="imageModalLabel" style="font-size: 1.25rem">
-          🖼️ Image Details
+          <i class="fas fa-image me-2 pulse"></i>Image Details
         </h5>
         <button
           type="button"
@@ -293,7 +302,7 @@
               id="modalImage"
               src="/placeholder.svg"
               alt="Uploaded Image"
-              class="img-fluid rounded-lg"
+              class="img-fluid rounded-modern shadow-soft"
               style="max-height: 350px; object-fit: contain"
             />
             <p id="modalCaption" class="text-muted mt-3 small"></p>
@@ -307,7 +316,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
+          <i class="fas fa-times me-2"></i>Close
         </button>
       </div>
     </div>
@@ -424,23 +433,25 @@
 <style>
   /* General Body and Container */
   body {
-    background-color: #e8f5e8 !important; /* Very light green */
+    background: linear-gradient(135deg, #f8fffe 0%, #f1f8f1 100%) !important;
     padding-top: 56px; /* To account for fixed navbar */
-    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: 'Inter', "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     color: #333;
   }
   .container {
-    background-color: #e8f5e8;
+    background: transparent;
   }
 
   /* Navbar */
   .navbar-custom {
-    background-color: #2e7d32 !important; /* Darker green for navbar */
-    box-shadow: none; /* Removed shadow */
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%) !important;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
   }
   .navbar-brand {
     color: #ffffff !important;
-    font-size: 1.25rem; /* Adjusted font size */
+    font-size: 1.25rem;
+    font-weight: 700;
   }
   .navbar-text strong {
     color: #ffffff;
@@ -448,121 +459,138 @@
 
   /* Sidebar */
   .sidebar {
-    background-color: #1b5e20 !important; /* Even darker green for sidebar */
-    box-shadow: none; /* Removed shadow */
+    background: linear-gradient(180deg, var(--primary-green) 0%, var(--dark-green) 100%) !important;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
   }
   .sidebar-header h4 {
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 700;
   }
   .sidebar-menu .menu-item .menu-link {
-    color: #c8e6c9; /* Lighter green for links */
-    transition: background-color 0.3s ease, color 0.3s ease;
-    padding: 10px 18px; /* Adjusted padding */
-    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all var(--transition-fast);
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
     margin: 5px 10px;
+    font-weight: 500;
   }
   .sidebar-menu .menu-item .menu-link:hover,
   .sidebar-menu .menu-item.active .menu-link {
-    background-color: #4caf50; /* Medium green on hover/active */
+    background: rgba(255, 255, 255, 0.15);
     color: #ffffff;
-    transform: translateX(5px);
+    transform: translateX(8px);
+    box-shadow: var(--shadow-md);
   }
   .sidebar-menu .menu-item i {
     margin-right: 15px;
-    font-size: 1rem; /* Adjusted font size */
+    font-size: 1rem;
   }
 
   /* Card Styling */
   .card {
-    background-color: #ffffff !important; /* White card background for professionalism */
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
     border: none;
-    border-radius: 15px;
-    box-shadow: none; /* Removed shadow */
-    transition: transform 0.3s ease; /* Kept transform for subtle hover */
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
   }
   .card:hover {
-    transform: translateY(-3px);
-    box-shadow: none; /* Removed shadow */
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
   }
   .card-title {
-    color: green !important; /* Dark green title */
-    font-weight: bold;
-    font-size: 1.75rem; /* Adjusted to fs-4 equivalent */
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-green) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: 1.75rem;
   }
 
   /* Form Elements */
   .form-label {
-    color: #2e7d32; /* Medium green */
-    font-weight: 600;
-    font-size: 1rem; /* Adjusted to fs-6 equivalent */
+    color: var(--primary-green);
+    font-weight: 700;
+    font-size: 1rem;
   }
   .form-control {
-    border: 2px solid #c8e6c9;
-    border-radius: 10px;
-    padding: 10px 15px; /* Adjusted padding */
-    font-size: 1rem; /* Adjusted font size */
-    transition: border-color 0.3s ease;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
   }
   .form-control:focus {
-    border-color: #4caf50;
-    box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.2); /* Kept focus shadow */
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 0.25rem rgba(139, 195, 74, 0.25);
+    transform: translateY(-1px);
   }
 
   /* Button Styling */
   .btn-success {
-    background-color: #2e7d32 !important;
-    border-color: #2e7d32 !important;
-    border-radius: 10px;
-    font-weight: 600;
-    padding: 10px 20px; /* Adjusted padding for btn-md */
-    font-size: 1rem; /* Adjusted font size for btn-md */
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    background: linear-gradient(135deg, var(--success) 0%, var(--light-green) 100%) !important;
+    border: none !important;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    padding: 12px 24px;
+    font-size: 1rem;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
   }
   .btn-success:hover {
-    background-color: #1b5e20 !important;
-    border-color: #1b5e20 !important;
-    transform: translateY(-2px);
-    box-shadow: none; /* Removed shadow */
+    background: linear-gradient(135deg, var(--light-green) 0%, var(--accent-green) 100%) !important;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    color: white;
   }
   .btn-primary {
-    background-color: #4caf50 !important; /* Greenish primary button */
-    border-color: #4caf50 !important;
-    border-radius: 10px;
-    font-weight: 600;
-    padding: 10px 20px; /* Adjusted padding for btn-md */
-    font-size: 1rem; /* Adjusted font size for btn-md */
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%) !important;
+    border: none !important;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    padding: 12px 24px;
+    font-size: 1rem;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
   }
   .btn-primary:hover {
-    background-color: #2e7d32 !important;
-    border-color: #2e7d32 !important;
-    transform: translateY(-2px);
-    box-shadow: none; /* Removed shadow */
+    background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%) !important;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    color: white;
   }
   .btn-secondary {
-    background-color: #6c757d !important;
-    border-color: #6c757d !important;
-    border-radius: 10px;
+    background: linear-gradient(135deg, var(--dark-gray) 0%, #5a6268 100%) !important;
+    border: none !important;
+    border-radius: var(--radius-md);
     font-weight: 600;
-    padding: 10px 20px; /* Adjusted padding */
-    font-size: 1rem; /* Adjusted font size */
+    padding: 12px 24px;
+    font-size: 1rem;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
   }
   .btn-secondary:hover {
-    background-color: #5a6268 !important;
-    border-color: #545b62 !important;
+    background: linear-gradient(135deg, #5a6268 0%, #545b62 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: white;
   }
 
   /* Preview Image */
   .preview img {
-    border: 3px solid #c8e6c9 !important;
-    border-radius: 10px;
-    box-shadow: none; /* Removed shadow */
+    border: 3px solid var(--accent-green) !important;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
   }
   .preview img:hover {
-    transform: scale(1.02);
-    transition: transform 0.3s ease;
-    border-color: #4caf50 !important;
+    transform: scale(1.05);
+    border-color: var(--primary-green) !important;
+    box-shadow: var(--shadow-lg);
   }
 
   /* Loading and Result Messages */
