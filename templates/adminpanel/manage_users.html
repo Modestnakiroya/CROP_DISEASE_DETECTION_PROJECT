@@ -5,52 +5,75 @@
 {% block content %}
 <style>
     .page-header {
-        background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
         color: white;
-        padding: 2rem;
-        border-radius: 12px;
+        padding: 2.5rem;
+        border-radius: var(--radius-lg);
         margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+        opacity: 0.3;
     }
     
     .page-header h2 {
         margin: 0;
-        font-weight: 600;
+        font-weight: 700;
         display: flex;
         align-items: center;
         gap: 15px;
+        position: relative;
+        z-index: 1;
     }
     
     .page-header .subtitle {
-        color: #a8d4a8;
+        color: rgba(255, 255, 255, 0.9);
         font-size: 1rem;
         margin-top: 8px;
+        position: relative;
+        z-index: 1;
     }
     
     .content-section {
         background: white;
-        border-radius: 12px;
+        border-radius: var(--radius-lg);
         padding: 2rem;
         margin-bottom: 2rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        box-shadow: var(--shadow-md);
         border: 1px solid #e9ecef;
+        transition: all var(--transition-normal);
+    }
+    
+    .content-section:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
     }
     
     .section-title {
-        color: #2d5016;
-        font-weight: 600;
+        color: var(--primary-green);
+        font-weight: 700;
         margin-bottom: 1.5rem;
         display: flex;
         align-items: center;
         gap: 10px;
         padding-bottom: 10px;
-        border-bottom: 2px solid #e9ecef;
+        border-bottom: 3px solid var(--accent-green);
     }
     
     .table-container {
         overflow-x: auto;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
     }
     
     .table {
@@ -58,25 +81,25 @@
     }
     
     .table thead th {
-        background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
         color: white;
         border: none;
-        padding: 15px 12px;
-        font-weight: 600;
+        padding: 18px 15px;
+        font-weight: 700;
         text-transform: uppercase;
-        font-size: 0.85rem;
-        letter-spacing: 0.5px;
+        font-size: 0.875rem;
+        letter-spacing: 1px;
     }
     
     .table tbody td {
-        padding: 12px;
+        padding: 15px;
         vertical-align: middle;
         border-bottom: 1px solid #e9ecef;
     }
     
     .table tbody tr:hover {
-        background-color: #f8f9fa;
-        transition: background-color 0.3s ease;
+        background: linear-gradient(135deg, var(--pale-green) 0%, #f8f9fa 100%);
+        transition: background var(--transition-fast);
     }
     
     .table tbody tr:last-child td {
@@ -87,51 +110,76 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: var(--radius-xl);
+        font-size: 0.875rem;
+        font-weight: 600;
+        box-shadow: var(--shadow-sm);
+        transition: all var(--transition-fast);
+    }
+    
+    .user-badge:hover {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-md);
     }
     
     .user-badge.farmer {
-        background: #e8f5e8;
-        color: #2d5016;
+        background: linear-gradient(135deg, var(--pale-green) 0%, #e8f5e8 100%);
+        color: var(--primary-green);
+        border: 1px solid var(--accent-green);
     }
     
     .user-badge.admin {
-        background: #fff3cd;
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
         color: #856404;
+        border: 1px solid #ffc107;
     }
     
     .user-badge.default {
-        background: #e9ecef;
+        background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
         color: #6c757d;
+        border: 1px solid #dee2e6;
     }
     
     .btn-action {
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
+        padding: 8px 16px;
+        border-radius: var(--radius-md);
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all var(--transition-fast);
+        box-shadow: var(--shadow-sm);
     }
     
     .btn-action:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
     }
     
     .form-container {
-        background: #f8f9fa;
-        border-radius: 12px;
+        background: linear-gradient(135deg, var(--light-gray) 0%, var(--pale-green) 100%);
+        border-radius: var(--radius-lg);
         padding: 2rem;
-        border: 2px dashed #dee2e6;
-        transition: all 0.3s ease;
+        border: 2px dashed var(--accent-green);
+        transition: all var(--transition-normal);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .form-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-green) 0%, var(--accent-green) 100%);
     }
     
     .form-container:hover {
-        border-color: #4a7c59;
-        background: #f1f8f1;
+        border-color: var(--primary-green);
+        background: linear-gradient(135deg, var(--pale-green) 0%, #f1f8f1 100%);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
     }
     
     .form-group {
@@ -139,43 +187,64 @@
     }
     
     .form-label {
-        color: #2d5016;
-        font-weight: 600;
+        color: var(--primary-green);
+        font-weight: 700;
         margin-bottom: 8px;
         display: block;
     }
     
     .form-control {
-        border: 2px solid #e9ecef;
-        border-radius: 8px;
-        padding: 12px 15px;
+        border: 2px solid var(--medium-gray);
+        border-radius: var(--radius-md);
+        padding: 14px 16px;
         font-size: 0.95rem;
-        transition: all 0.3s ease;
+        transition: all var(--transition-fast);
+        box-shadow: var(--shadow-sm);
     }
     
     .form-control:focus {
-        border-color: #4a7c59;
-        box-shadow: 0 0 0 0.2rem rgba(74, 124, 89, 0.25);
+        border-color: var(--accent-green);
+        box-shadow: 0 0 0 0.2rem rgba(139, 195, 74, 0.25);
+        transform: translateY(-1px);
     }
     
     .btn-create {
-        background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
+        background: linear-gradient(135deg, var(--secondary-green) 0%, var(--primary-green) 100%);
         border: none;
         color: white;
-        padding: 12px 30px;
-        border-radius: 8px;
-        font-weight: 600;
+        padding: 14px 32px;
+        border-radius: var(--radius-md);
+        font-weight: 700;
         font-size: 0.95rem;
-        transition: all 0.3s ease;
+        transition: all var(--transition-normal);
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        box-shadow: var(--shadow-md);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-create::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn-create:hover::before {
+        left: 100%;
     }
     
     .btn-create:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-xl);
         color: white;
+        background: linear-gradient(135deg, var(--accent-green) 0%, var(--secondary-green) 100%);
     }
     
     .stats-row {
@@ -187,23 +256,35 @@
     .stat-card {
         flex: 1;
         background: white;
-        border-radius: 10px;
+        border-radius: var(--radius-lg);
         padding: 1.5rem;
         text-align: center;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        border-left: 4px solid #4a7c59;
+        box-shadow: var(--shadow-md);
+        border-left: 4px solid var(--accent-green);
+        transition: all var(--transition-normal);
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
     }
     
     .stat-number {
         font-size: 2rem;
-        font-weight: bold;
-        color: #2d5016;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-green) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         margin-bottom: 5px;
     }
     
     .stat-label {
-        color: #6c757d;
+        color: var(--dark-gray);
         font-size: 0.9rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .empty-state {
@@ -215,6 +296,7 @@
     .empty-state-icon {
         font-size: 3rem;
         margin-bottom: 1rem;
+        opacity: 0.6;
     }
     
     @media (max-width: 768px) {
@@ -232,14 +314,14 @@
     }
 </style>
 
-<div class="page-header">
-    <h2>👥 Manage Users</h2>
+<div class="page-header fade-in-up">
+    <h2><i class="fas fa-users me-3"></i>Manage Users</h2>
     <div class="subtitle">Manage farmer accounts and system users</div>
 </div>
 
 <!-- User Table -->
-<div class="content-section">
-    <h5 class="section-title">👨‍🌾 All Users</h5>
+<div class="content-section slide-in-right">
+    <h5 class="section-title"><i class="fas fa-list me-2"></i>All Users</h5>
     
     {% if users %}
     <div class="table-container">
@@ -259,37 +341,47 @@
                 <tr>
                     <td>
                         <div class="d-flex align-items-center">
-                            <div class="user-avatar me-2" style="width: 35px; height: 35px; border-radius: 50%; background: #4a7c59; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8rem;">
-                                {{ user.username|first|upper }}
+                            <div class="user-avatar me-3" style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-green) 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.9rem; box-shadow: var(--shadow-sm);">
+                                <i class="fas fa-user"></i>
                             </div>
-                            <strong>{{ user.username }}</strong>
+                            <div>
+                                <strong class="text-gradient">{{ user.username }}</strong>
+                                <br><small class="text-muted">ID: {{ user.id }}</small>
+                            </div>
                         </div>
                     </td>
-                    <td>{{ user.email }}</td>
+                    <td>
+                        <i class="fas fa-envelope me-2 text-muted"></i>{{ user.email }}
+                    </td>
                     <td>
                         {% if user.profile.phone %}
-                            <span class="text-success">{{ user.profile.phone }}</span>
+                            <span class="text-success"><i class="fas fa-phone me-1"></i>{{ user.profile.phone }}</span>
                         {% else %}
-                            <span class="text-muted">Not Set</span>
+                            <span class="text-muted"><i class="fas fa-phone-slash me-1"></i>Not Set</span>
                         {% endif %}
                     </td>
                     <td>
                         {% if user.profile.address %}
-                            {{ user.profile.address }}
+                            <i class="fas fa-map-marker-alt me-2 text-muted"></i>{{ user.profile.address|truncatechars:30 }}
                         {% else %}
-                            <span class="text-muted">Not Set</span>
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>Not Set</span>
                         {% endif %}
                     </td>
                     <td>
                         {% if user.profile.get_user_role %}
-                            <span class="user-badge farmer">🌾 {{ user.profile.get_user_role }}</span>
+                            <span class="user-badge farmer">
+                                <i class="fas fa-{% if user.profile.farmer %}seedling{% elif user.profile.agronomist %}user-md{% elif user.profile.extension_worker %}users{% else %}user{% endif %} me-1"></i>
+                                {{ user.profile.get_user_role|title }}
+                            </span>
                         {% else %}
-                            <span class="user-badge default">👤 User</span>
+                            <span class="user-badge default">
+                                <i class="fas fa-user me-1"></i>User
+                            </span>
                         {% endif %}
                     </td>
                     <td>
                         <a href="{% url 'edit-user' user.id %}" class="btn btn-outline-primary btn-action">
-                            ✏️ Edit
+                            <i class="fas fa-edit me-1"></i>Edit
                         </a>
                     </td>
                 </tr>
@@ -299,7 +391,7 @@
     </div>
     {% else %}
     <div class="empty-state">
-        <div class="empty-state-icon">👥</div>
+        <div class="empty-state-icon"><i class="fas fa-users"></i></div>
         <h5>No users found</h5>
         <p>Start by adding your first user below.</p>
     </div>
@@ -307,8 +399,8 @@
 </div>
 
 <!-- Add User Form -->
-<div class="content-section">
-    <h5 class="section-title">➕ Add New User</h5>
+<div class="content-section fade-in-up">
+    <h5 class="section-title"><i class="fas fa-user-plus me-2"></i>Add New User</h5>
     
     <div class="form-container">
         <form method="post" action="{% url 'manage-users' %}">
@@ -364,7 +456,7 @@
             </div>
             
             <button type="submit" class="btn-create">
-                <span>👤</span>
+                <i class="fas fa-user-plus"></i>
                 Create User
             </button>
         </form>

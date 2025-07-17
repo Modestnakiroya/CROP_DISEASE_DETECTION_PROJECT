@@ -40,3 +40,4 @@ echo "venv/" >> .gitignore
 diagnosis/migrations/__init.py__
 recommendations/migrations/__init.py__
 datadump.json
+.env
